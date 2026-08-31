@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planificación Nutricional — Guillermo Torrubia</title>
+<link rel="apple-touch-icon" href="Logo.png">
+<meta name="apple-mobile-web-app-title" content="NutriLogos">
+<meta name="application-name" content="NutriLogos">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; background: #fff; color: #1a1a1a; padding: 1.5rem; max-width: 860px; margin: 0 auto; }
+
+  .pn-days { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.25rem; }
+  .pn-day-btn { padding: 6px 14px; font-size: 13px; border: 1px solid #ccc; border-radius: 8px; background: transparent; color: #555; cursor: pointer; transition: background 0.15s; }
+  .pn-day-btn:hover { background: #f4f4f4; }
+  .pn-day-btn.active { background: #f0f0f0; color: #111; border-color: #888; font-weight: 500; }
+  .pn-meals { display: grid; gap: 10px; }
+  .pn-card { background: #fff; border: 1px solid #e5e5e5; border-radius: 12px; padding: 1rem 1.25rem; }
+  .pn-meal-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .pn-badge { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 8px; white-space: nowrap; }
+  .badge-d   { background: #EAF3DE; color: #3B6D11; }
+  .badge-a   { background: #E1F5EE; color: #0F6E56; }
+  .badge-me  { background: #EEEDFE; color: #3C3489; }
+  .badge-c   { background: #FAECE7; color: #993C1D; }
+  .badge-ce  { background: #F3E8FF; color: #6B21A8; }
+  .badge-libre { background: #FBEAF0; color: #993556; }
+  .pn-time { font-size: 12px; color: #aaa; }
+  .pn-name { font-size: 15px; font-weight: 500; color: #111; margin-bottom: 4px; }
+  .pn-note { font-size: 12px; color: #888; border-left: 2px solid #ddd; padding-left: 8px; line-height: 1.5; }
+  .pn-extra-tag { display: inline-block; font-size: 11px; font-weight: 500; background: #E8F5E9; color: #2E7D32; border: 1px solid #A5D6A7; border-radius: 6px; padding: 2px 8px; margin-bottom: 6px; }
+  .pn-batch-tag  { display: inline-block; font-size: 11px; font-weight: 500; background: #FFF8E1; color: #795700; border: 1px solid #F0D060; border-radius: 6px; padding: 2px 8px; margin-bottom: 6px; }
+  .pn-sport-banner { border-radius: 8px; padding: 8px 12px; font-size: 12px; margin-bottom: 10px; }
+  .pn-sport-banner.fuerza   { background: #E6F1FB; border: 1px solid #B5D4F4; color: #0C447C; }
+  .pn-sport-banner.run      { background: #EAF3DE; border: 1px solid #C0DD97; color: #27500A; }
+  .pn-sport-banner.crossfit { background: #FAEEDA; border: 1px solid #FAC775; color: #633806; }
+  .pn-sport-banner.rest     { background: #F1EFE8; border: 1px solid #D3D1C7; color: #444441; }
+  .pn-libre-banner { background: #FBEAF0; border: 1px solid #F4C0D1; border-radius: 8px; padding: 8px 12px; font-size: 12px; color: #72243E; margin-bottom: 10px; }
+  .pn-supp-banner { background: #F3F0FB; border: 1px solid #C9BFEF; border-radius: 8px; padding: 10px 14px; font-size: 12px; color: #3C2E7A; margin-bottom: 10px; line-height: 1.7; }
+  .pn-batch-section { background: #FFFDE7; border: 1px solid #F0D060; border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 10px; }
+  .pn-batch-section h3 { font-size: 13px; font-weight: 600; color: #795700; margin-bottom: 8px; }
+  .pn-batch-section ul { padding-left: 1.1rem; font-size: 13px; color: #555; line-height: 1.85; }
+  .pn-batch-section .bc-note { font-size: 12px; color: #888; margin-top: 10px; border-left: 2px solid #F0D060; padding-left: 8px; }
+  .pn-legend { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid #e5e5e5; }
+  .pn-legend-item { display: flex; align-items: center; gap: 5px; font-size: 12px; color: #777; }
+  h1 { font-size: 20px; font-weight: 500; margin-bottom: 0.25rem; }
+  .subtitle { font-size: 13px; color: #777; margin-bottom: 1.5rem; }
+
+  .pn-perfil { margin-bottom: 2rem; }
+  .pn-perfil-header { display: flex; align-items: baseline; gap: 10px; margin-bottom: 0.25rem; }
+  .pn-perfil-score { font-size: 12px; font-weight: 500; background: #EAF3DE; color: #3B6D11; border: 1px solid #C0DD97; border-radius: 8px; padding: 2px 10px; }
+  .pn-perfil-sub { font-size: 13px; color: #777; margin-bottom: 1rem; }
+  .pn-perfil-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 10px; }
+  .pn-perfil-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  @media (max-width: 600px) {
+    .pn-perfil-grid { grid-template-columns: repeat(2, 1fr); }
+    .pn-perfil-grid-2 { grid-template-columns: 1fr; }
+  }
+  .pn-metric { background: #f7f7f7; border-radius: 10px; padding: 0.75rem 1rem; }
+  .pn-metric-lbl { font-size: 11px; color: #999; margin-bottom: 3px; }
+  .pn-metric-val { font-size: 18px; font-weight: 500; color: #111; }
+  .pn-metric-sub { font-size: 11px; color: #bbb; margin-top: 2px; }
+  .pn-impresiones { border: 1px solid #e5e5e5; border-radius: 12px; padding: 1rem 1.25rem; }
+  .pn-impresiones-title { font-size: 12px; font-weight: 500; color: #999; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; }
+  .pn-imp-item { font-size: 13px; color: #444; line-height: 1.65; padding: 0.4rem 0; border-bottom: 1px solid #f0f0f0; display: flex; gap: 8px; align-items: flex-start; }
+  .pn-imp-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .pn-imp-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 7px; }
+  .pn-imp-dot-green { background: #1D9E75; }
+  .pn-imp-dot-blue  { background: #185FA5; }
+  .pn-imp-dot-amber { background: #BA7517; }
+  .pn-imp-dot-coral { background: #993C1D; }
+  .pn-perfil-divider { border: none; border-top: 1px solid #e5e5e5; margin: 1.5rem 0; }
+  .pn-perfil-section-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+  @media (max-width: 600px) { .pn-perfil-section-row { grid-template-columns: 1fr; } }
+  .pn-antro-card { background: #f7f7f7; border-radius: 10px; padding: 0.75rem 1rem; }
+  .pn-antro-card-title { font-size: 11px; font-weight: 500; color: #999; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.6rem; }
+  .pn-antro-row { display: flex; justify-content: space-between; font-size: 12px; padding: 3px 0; border-bottom: 1px solid #eee; color: #555; }
+  .pn-antro-row:last-child { border-bottom: none; }
+  .pn-antro-val { font-weight: 500; color: #111; }
+  .section-label { font-size: 12px; font-weight: 500; color: #666; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.85rem; padding-bottom: 0.4rem; border-bottom: 1px solid #e8e8e8; }
+
+  .pn-shop-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1rem; }
+  .pn-shop-btn { padding: 6px 14px; font-size: 13px; border: 1px solid #ccc; border-radius: 8px; background: transparent; color: #555; cursor: pointer; transition: background 0.15s; }
+  .pn-shop-btn:hover { background: #f4f4f4; }
+  .pn-shop-btn.active { background: #f0f0f0; color: #111; border-color: #888; font-weight: 500; }
+  .pn-shop-btn.active.cat-prot  { background: #E6F1FB; border-color: #B5D4F4; color: #0C447C; }
+  .pn-shop-btn.active.cat-carb  { background: #FAEEDA; border-color: #FAC775; color: #633806; }
+  .pn-shop-btn.active.cat-fat   { background: #EAF3DE; border-color: #C0DD97; color: #27500A; }
+  .pn-shop-btn.active.cat-extra { background: #F1EFE8; border-color: #D3D1C7; color: #444441; }
+  .pn-shop-list { display: grid; gap: 8px; }
+  .pn-shop-item { border: 1px solid #e5e5e5; border-radius: 10px; padding: 0.75rem 1rem; display: flex; justify-content: space-between; align-items: center; gap: 12px; cursor: pointer; transition: background 0.15s, opacity 0.15s; }
+  .pn-shop-item.cat-prot  { background: #f5f9fe; }
+  .pn-shop-item.cat-carb  { background: #fefaf5; }
+  .pn-shop-item.cat-fat   { background: #f6fbf2; }
+  .pn-shop-item.cat-extra { background: #f8f8f6; }
+  .pn-shop-item:hover { filter: brightness(0.97); }
+  .pn-shop-item.done { opacity: 0.5; }
+  .pn-shop-item.done .pn-shop-item-name { text-decoration: line-through; color: #aaa; }
+  .pn-shop-item-name { font-size: 13px; font-weight: 500; color: #111; }
+  .pn-shop-item-qty { font-size: 11px; font-weight: 600; color: #555; white-space: nowrap; text-align: right; padding: 3px 8px; border-radius: 6px; background:#eee; }
+
+  .pn-ing-list { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; }
+  .pn-ing { display: inline-block; font-size: 12px; background: #f4f4f4; border: 1px solid #e8e8e8; border-radius: 6px; padding: 3px 9px; color: #444; line-height: 1.4; }
+
+  .pn-supl-block { background: #F3F0FB; border: 1px solid #C9BFEF; border-radius: 12px; padding: 1rem 1.25rem; }
+  .pn-supl-item { display: flex; gap: 10px; align-items: flex-start; padding: 0.5rem 0; border-bottom: 1px solid #DDD8F5; font-size: 13px; color: #333; line-height: 1.5; }
+  .pn-supl-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .pn-supl-dot { width: 6px; height: 6px; border-radius: 50%; background: #7C5CBF; flex-shrink: 0; margin-top: 6px; }
+
+  .pn-print-btn { display: inline-flex; align-items: center; gap: 7px; background: #0d3d4f; color: #fff; border: none; border-radius: 10px; padding: 10px 20px; font-size: 13px; font-weight: 500; cursor: pointer; letter-spacing: 0.02em; }
+  .pn-print-btn:hover { background: #0f4d63; }
+
+  @media print {
+    @page { size: A4 landscape; margin: 1cm 1.2cm; }
+    html, body { height: 100%; margin: 0; padding: 0; }
+    body > * { display: none !important; }
+    #printArea { display: block !important; }
+    #printArea {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      display: flex !important; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 0.5cm; box-sizing: border-box;
+    }
+    #printArea .section-label { font-size: 14px !important; margin-bottom: 0.5rem !important; color: #333 !important; }
+    #printArea table { width: 100% !important; min-width: unset !important; font-size: 11px !important; border-collapse: collapse !important; }
+    #printArea th { padding: 8px 6px !important; font-size: 10px !important; }
+    #printArea td { padding: 10px 8px !important; font-size: 11px !important; line-height: 1.4 !important; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .pn-print-btn { display: none !important; }
+    #printArea { page-break-inside: avoid; }
+    table { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Planificación Nutricional — Guillermo Torrubia</h1>
+<p class="subtitle">Mejora de hábitos dentro de contexto militar (Turquía) · Turnos rotativos · Pérdida de grasa progresiva</p>
+
+<!-- BLOQUE DESCRIPCIÓN CLIENTE -->
+<div style="border:1px solid #e5e5e5;border-radius:12px;padding:1rem 1.25rem;margin-bottom:1rem;background:#fafafa;">
+  <div style="font-size:11px;font-weight:600;color:#999;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.75rem;">Descripción del cliente</div>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;">
+    <div style="background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:6px 12px;font-size:12px;color:#333;">
+      <span style="color:#999;font-size:10px;text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:2px;">Perfil</span>
+      Hombre · 27 años · 176 cm · 73 kg
+    </div>
+    <div style="background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:6px 12px;font-size:12px;color:#333;">
+      <span style="color:#999;font-size:10px;text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:2px;">Contexto</span>
+      Militar destinado en Turquía · turnos rotativos (mañana/tarde/noche) · comedor tipo buffet
+    </div>
+    <div style="background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:6px 12px;font-size:12px;color:#333;">
+      <span style="color:#999;font-size:10px;text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:2px;">Objetivo</span>
+      Mejorar la calidad de la alimentación dentro del buffet + pérdida de grasa progresiva
+    </div>
+    <div style="background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:6px 12px;font-size:12px;color:#333;">
+      <span style="color:#999;font-size:10px;text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:2px;">Contexto adicional</span>
+      Clima cálido-húmedo · agua de mineralización muy baja · 5-6h sentado en turno
+    </div>
+    <div style="background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:6px 12px;font-size:12px;color:#333;">
+      <span style="color:#999;font-size:10px;text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:2px;">Aversiones / exclusiones</span>
+      Pancake y sirope de arce (no le gustan — se evitan de forma natural)
+    </div>
+  </div>
+</div>
+
+<!-- BLOQUE OBJETIVO -->
+<div style="background:#EBF3FB;border:1.5px solid #A8C8E8;border-radius:12px;padding:1rem 1.25rem;margin-bottom:1.5rem;">
+  <div style="font-size:11px;font-weight:600;color:#1a4a72;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.5rem;">Objetivo</div>
+  <p style="font-size:14px;font-weight:600;color:#0C3358;line-height:1.65;">Mejorar la gestión y calidad de sus comidas dentro del comedor tipo buffet del destino en Turquía, aplicando una jerarquía de elección (proteína magra y fruta entera como base, ultraprocesados y azúcar libre como excepción) para favorecer una pérdida de grasa progresiva y sostenible. Al no disponer de mediciones presenciales, el seguimiento se realiza con datos de báscula (tendencia semanal, no valor puntual) y sensaciones subjetivas: energía, hambre, rendimiento en el gimnasio y ajuste de la ropa.</p>
+</div>
+
+<div class="pn-perfil">
+  <div class="pn-perfil-header">
+    <span style="font-size:15px;font-weight:500;color:#111">Perfil de la persona</span>
+  </div>
+  <p class="pn-perfil-sub">Guillermo Torrubia · 27 años (9 junio 1999) · Hombre · Datos de partida — sin valoración presencial (báscula + sensaciones)</p>
+
+  <div class="pn-perfil-grid" style="margin-bottom:10px">
+    <div class="pn-metric"><div class="pn-metric-lbl">Peso actual</div><div class="pn-metric-val">73 kg</div><div class="pn-metric-sub">IMC 23,6 · Normopeso</div></div>
+    <div class="pn-metric"><div class="pn-metric-lbl">Talla</div><div class="pn-metric-val">176 cm</div><div class="pn-metric-sub">Sin antropometría presencial disponible</div></div>
+    <div class="pn-metric"><div class="pn-metric-lbl">TEE estimado</div><div class="pn-metric-val">~2.700-2.900 kcal</div><div class="pn-metric-sub">Estimación por fórmula + actividad</div></div>
+    <div class="pn-metric"><div class="pn-metric-lbl">Objetivo calórico</div><div class="pn-metric-val">~2.300-2.500 kcal</div><div class="pn-metric-sub">Déficit moderado</div></div>
+  </div>
+  <div class="pn-perfil-grid" style="margin-bottom:10px">
+    <div class="pn-metric"><div class="pn-metric-lbl">Proteína objetivo</div><div class="pn-metric-val">~115-120 g/día</div><div class="pn-metric-sub">~1,6 g/kg · fuerza + déficit</div></div>
+    <div class="pn-metric"><div class="pn-metric-lbl">Distribución macro</div><div class="pn-metric-val">45-55 / 20-25 / 20-25</div><div class="pn-metric-sub">% HC / Proteína / Grasa</div></div>
+    <div class="pn-metric"><div class="pn-metric-lbl">Peso objetivo</div><div class="pn-metric-val">Sin número fijo</div><div class="pn-metric-sub">Trabajo por tendencia de báscula</div></div>
+    <div class="pn-metric"><div class="pn-metric-lbl">Método de seguimiento</div><div class="pn-metric-val">Báscula + sensaciones</div><div class="pn-metric-sub">Sin bioimpedancia ni pliegues</div></div>
+  </div>
+
+  <div style="margin-top:10px">
+    <div class="section-label">Impresiones del profesional</div>
+    <div class="pn-impresiones">
+      <div class="pn-imp-item"><div class="pn-imp-dot pn-imp-dot-blue"></div><div><strong>Seguimiento adaptado.</strong> Sin mediciones presenciales disponibles; el progreso se valora por tendencia de peso semanal (no dato puntual) y sensaciones: energía, hambre, rendimiento en el gimnasio y ajuste de la ropa.</div></div>
+      <div class="pn-imp-item"><div class="pn-imp-dot pn-imp-dot-amber"></div><div><strong>Hidratación a vigilar.</strong> Agua local de mineralización muy baja + clima cálido-húmedo + entrenos con sudoración alta → mayor riesgo de pérdida de electrolitos. Se incluye recomendación específica más abajo.</div></div>
+      <div class="pn-imp-item"><div class="pn-imp-dot pn-imp-dot-amber"></div><div><strong>Entorno alimentario limitado.</strong> El comedor es predominantemente animal/procesado (huevo, embutido, cereales azucarados, bollería). El plan trabaja dentro de esas opciones priorizando lo más favorable, no plantea una dieta ideal desde cero.</div></div>
+      <div class="pn-imp-item"><div class="pn-imp-dot pn-imp-dot-green"></div><div><strong>Buena base disponible.</strong> Hay proteína magra simple (pechuga, pavo, atún, huevo), fruta entera variada y leche de soja (Pearl) en el comedor — suficiente para construir una estructura sólida.</div></div>
+    </div>
+  </div>
+</div>
+
+<hr class="pn-perfil-divider">
+
+<div id="printArea" style="margin-bottom:1.5rem">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.85rem;padding-bottom:0.4rem;border-bottom:1px solid #e8e8e8;">
+    <div class="section-label" style="margin:0;padding:0;border:none;">Menú de un vistazo — por tipo de turno</div>
+    <button class="pn-print-btn" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
+  </div>
+  <div style="overflow-x:auto;border-radius:12px;border:1px solid #e5e5e5;">
+    <table style="width:100%;border-collapse:collapse;min-width:700px;font-size:12px;">
+      <thead>
+        <tr>
+          <th style="background:#dce8f5;color:#1a2e44;padding:9px 10px;text-align:center;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-right:1px solid #c5d8ed;width:46px;"></th>
+          <th style="background:#dce8f5;color:#1a2e44;padding:9px 10px;text-align:center;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-right:1px solid #c5d8ed;">Turno mañana</th>
+          <th style="background:#dce8f5;color:#1a2e44;padding:9px 10px;text-align:center;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-right:1px solid #c5d8ed;">Turno tarde</th>
+          <th style="background:#dce8f5;color:#1a2e44;padding:9px 10px;text-align:center;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-right:1px solid #c5d8ed;">Turno noche</th>
+          <th style="background:#dce8f5;color:#1a2e44;padding:9px 10px;text-align:center;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-right:1px solid #c5d8ed;">Saliente noche</th>
+          <th style="background:#dce8f5;color:#1a2e44;padding:9px 10px;text-align:center;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;">Descanso</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="background:#f7f7f7;padding:8px 6px;border-right:2px solid #e0e0e0;border-bottom:1px solid #eee;text-align:center;vertical-align:middle;"><span class="pn-badge badge-d" style="display:inline-block;">D</span></td>
+          <td style="background:#f9fcf5;padding:8px 10px;border-right:1px solid #eee;border-bottom:1px solid #eee;text-align:center;color:#333;line-height:1.4;">Revuelto huevo+pavo / Tostada+cottage</td>
+          <td style="background:#f9fcf5;padding:8px 10px;border-right:1px solid #eee;border-bottom:1px solid #eee;text-align:center;color:#333;line-height:1.4;">Tostada+AOVE / Avena+soja</td>
+          <td style="background:#f9fcf5;padding:8px 10px;border-right:1px solid #eee;border-bottom:1px solid #eee;text-align:center;color:#333;line-height:1.4;">Avena+soja / Tostada+philadelphia</td>
+          <td style="background:#f9fcf5;padding:8px 10px;border-right:1px solid #eee;border-bottom:1px solid #eee;text-align:center;color:#333;line-height:1.4;">Tortilla+arroz / Avena+tostada</td>
+          <td style="background:#f9fcf5;padding:8px 10px;text-align:center;color:#333;line-height:1.4;">Tostada+AOVE / Avena+soja</td>
+        </tr>
+        <tr>
+          <td style="background:#f7f7f7;padding:8px 6px;border-right:2px solid #e0e0e0;border-bottom:1px solid #eee;text-align:center;vertical-align:middle;"><span class="pn-badge badge-c" style="display:inline-block;">C</span></td>
+          <td style="background:#f3fdf8;padding:8px 10px;border-right:1px solid #eee;border-bottom:1px solid #eee;text-align:center;color:#333;line-height:1.4;">Pechuga+batata / Ensalada+atún</td>
+          <td style="background:#f3fdf8;padding:8px 10px;border-right:1px solid #eee;border-bottom:1px solid #eee;text-align:center;color:#333;line-height:1.4;">Pechuga+arroz+ensalada / Huevo+batata</td>
+          <td style="background:#f3fdf8;padding:8px 10px;border-right:1px solid #eee;border-bottom:1px solid #eee;text-align:center;color:#333;line-height:1.4;">Ensalada+pechuga / Pechuga+arroz+huevo</td>
+          <td style="background:#f3fdf8;padding:8px 10px;border-right:1px solid #eee;border-bottom:1px solid #eee;text-align:center;color:#333;line-height:1.4;">Menú del día / Recena tipo día 3</td>
+          <td style="background:#f3fdf8;padding:8px 10px;text-align:center;color:#333;line-height:1.4;">Ensalada+pechuga+batata / Pechuga+arroz+huevo</td>
+        </tr>
+        <tr>
+          <td style="background:#f7f7f7;padding:8px 6px;border-right:2px solid #e0e0e0;border-bottom:1px solid #eee;text-align:center;vertical-align:middle;"><span class="pn-badge badge-me" style="display:inline-block;">Me</span></td>
+          <td style="background:#f5f3ff;padding:8px 10px;border-right:1px solid #eee;border-bottom:1px solid #eee;text-align:center;color:#333;line-height:1.4;">Fruta / Batido proteína</td>
+          <td style="background:#f5f3ff;padding:8px 10px;border-right:1px solid #eee;border-bottom:1px solid #eee;text-align:center;color:#333;line-height:1.4;">Yogur+fruta / Leche+avena</td>
+          <td style="background:#f5f3ff;padding:8px 10px;border-right:1px solid #eee;border-bottom:1px solid #eee;text-align:center;color:#333;line-height:1.4;">Fruta (ligera, pre-descanso)</td>
+          <td style="background:#f5f3ff;padding:8px 10px;border-right:1px solid #eee;border-bottom:1px solid #eee;text-align:center;color:#aaa;font-style:italic;">Fruta si hay hambre / —</td>
+          <td style="background:#f5f3ff;padding:8px 10px;text-align:center;color:#aaa;font-style:italic;">—</td>
+        </tr>
+        <tr>
+          <td style="background:#f7f7f7;padding:8px 6px;border-right:2px solid #e0e0e0;text-align:center;vertical-align:middle;"><span class="pn-badge badge-ce" style="display:inline-block;">Ce</span></td>
+          <td style="background:#fdf8ff;padding:8px 10px;border-right:1px solid #eee;text-align:center;color:#333;line-height:1.4;">Revuelto+cottage / Ensalada+pechuga</td>
+          <td style="background:#fdf8ff;padding:8px 10px;border-right:1px solid #eee;text-align:center;color:#333;line-height:1.4;">Ensalada+pechuga / Menú del día</td>
+          <td style="background:#fdf8ff;padding:8px 10px;border-right:1px solid #eee;text-align:center;color:#333;line-height:1.4;">Revuelto+pavo+cottage+fruta</td>
+          <td style="background:#fdf8ff;padding:8px 10px;border-right:1px solid #eee;text-align:center;color:#333;line-height:1.4;">Menú día / Recena tipo día 3</td>
+          <td style="background:#fdf8ff;padding:8px 10px;text-align:center;color:#333;line-height:1.4;">Menú del día / Ensalada+huevo</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid #e5e5e5;">
+  <div class="section-label">Menú desarrollado por tipo de turno</div>
+  <div class="pn-days" id="dayTabs"></div>
+  <div id="dayView"></div>
+  <div class="pn-legend">
+    <span style="font-size:12px;color:#aaa;margin-right:4px;">Comidas:</span>
+    <span class="pn-legend-item"><span class="pn-badge badge-d">D</span> Desayuno</span>
+    <span class="pn-legend-item"><span class="pn-badge badge-c">C</span> Comida</span>
+    <span class="pn-legend-item"><span class="pn-badge badge-me">Me</span> Merienda</span>
+    <span class="pn-legend-item"><span class="pn-badge badge-ce">Ce</span> Cena</span>
+  </div>
+</div>
+
+<div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid #e5e5e5;">
+  <div class="section-label">Guía de elección en buffet</div>
+  <div class="pn-shop-tabs" id="shopTabs"></div>
+  <div id="shopView"></div>
+</div>
+
+<div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid #e5e5e5;">
+  <div class="section-label">Suplementación recomendada</div>
+  <div class="pn-supl-block">
+    <div class="pn-supl-item">
+      <div class="pn-supl-dot"></div>
+      <div><strong>Electrolitos (sodio/potasio)</strong> — Dado el agua local de muy baja mineralización, el clima cálido-húmedo y la sudoración elevada en los entrenos (especialmente día de fuerza + cardio), se recomienda reponer electrolitos en los entrenamientos más exigentes (sobres o pastillas de electrolitos, o añadir una pizca de sal a la comida post-entreno). Evidencia alta para prevención de deficiencia por sudoración elevada en climas cálidos.</div>
+    </div>
+    <div class="pn-supl-item">
+      <div class="pn-supl-dot"></div>
+      <div><strong>Aminoácidos intra-entreno (ya en uso)</strong> — Mantener los 400 ml de agua con aminoácidos en los entrenos de fuerza + cardio combinado (día 3). Evidencia moderada de utilidad en sesiones largas o combinadas; no imprescindible en sesiones de solo fuerza.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const days = [
+  {
+    short: "Mañ",
+    full: "Turno Mañana (07:00–15:00)",
+    sport: "🏋️ Fuerza — Pecho/bíceps",
+    sportClass: "fuerza",
+    sportBanner: "~1h30 aprox. · 400-500 kcal. Comida y cena se piden en el propio turno.",
+    suppl: null,
+    libre: false,
+    meals: [
+      { type:"D", time:"6:00", name:"Desayuno pre-gym (30 min antes)", tags:[], desc:"Opción A: Revuelto de 2-3 huevos (1/4 plato) + pavo, champiñón, pimiento, cebolla y tomate (1/2 plato) + café\nOpción B: Tostada integral 1-2 rebanadas + queso cottage (2-3 cucharadas) + fruta abundante — melón, sandía o piña (ración generosa) + café", note:"Evitar pancake+sirope como base habitual; priorizar huevo+verdura o cottage+tostada. Café sin azúcar." },
+      { type:"C", time:"13:00", name:"Comida (se pide en el turno)", tags:[], desc:"Opción A: Pechuga de pollo (1/4 plato) + batata o patata cocida (1/4 plato) + huevo duro 1 ud + fruta abundante (ración generosa)\nOpción B: Ensalada de lechuga, tomate, pepino y atún (1/2 plato) + batata/patata cocida (1/4 plato) + fruta abundante (ración generosa)", note:"Priorizar atún o pechuga sobre doblecheese burger. Batata/patata cocida mejor opción de HC que fritos si los hubiera." },
+      { type:"Me", time:"Al levantar de la siesta, pre-gym", name:"Merienda pre-entreno", tags:[], desc:"Opción A: Fruta abundante, la que haya (ración generosa)\nOpción B: Batido de proteína con agua (1 vaso) o snack proteico 12g (1 unidad)", note:"Cualquiera de sus 3 opciones habituales está bien; fruta como primera opción si hay variedad disponible." },
+      { type:"Ce", time:"23:00 (recena, tras gym)", name:"Cena / recena", tags:[], desc:"Opción A: Revuelto de 2-3 huevos (1/4 plato) + pavo (un puñado) + queso cottage (2-3 cucharadas) + fruta abundante (ración generosa)\nOpción B: Ensalada con pechuga troceada, preparada el día anterior (1/2 plato + 1/4 plato proteína) + tostada integral 1 rebanada", note:"Evitar bacon/hamburguesa/\"americanadas\" como base habitual de la recena — dejarlo como excepción puntual. El wrap de fiambres, ocasional." }
+    ],
+    batchCooking: null
+  },
+  {
+    short: "Tar",
+    full: "Turno Tarde (15:00–23:00)",
+    sport: "🏋️ Fuerza — Espalda/tríceps",
+    sportClass: "fuerza",
+    sportBanner: "~1h30 aprox. · 450-550 kcal. Entreno antes de la comida.",
+    suppl: null,
+    libre: false,
+    meals: [
+      { type:"D", time:"10:00 (pre-gym)", name:"Desayuno pre-entreno", tags:[], desc:"Opción A: Tostada integral 1-2 rebanadas + aceite de oliva (1 cucharada) + café + fruta abundante — plátano, melón, piña o sandía (ración generosa)\nOpción B: Avena con leche de soja (1 taza) + fruta abundante (ración generosa) + café", note:"Avena con leche de soja (Pearl) como primera opción si está disponible, mejor que leche de vaca con sabor añadido." },
+      { type:"C", time:"Al salir del gym", name:"Comida", tags:[], desc:"Opción A: Pechuga de pollo (1/4 plato) + arroz (1/4 plato) + ensalada propia con tomate, feta, nueces, maíz, atún, lechuga, cebolla y pepino (1/2 plato)\nOpción B: Huevo duro 2 uds + batata/patata cocida (1/4 plato) + ensalada (1/2 plato) + fruta abundante (ración generosa)", note:"La ensalada propia es de las mejores opciones disponibles en el buffet — mantenerla como base frecuente." },
+      { type:"Me", time:"En el turno", name:"Merienda", tags:[], desc:"Opción A: Yogur (1 unidad) + fruta abundante (ración generosa)\nOpción B: Leche con avena (1 vaso) o snack proteico (1 unidad)", note:"El yogur disponible es lácteo (no de soja); válido igualmente como merienda ligera." },
+      { type:"Ce", time:"21:30 (en el turno)", name:"Cena", tags:[], desc:"Opción A: Ensalada de lechuga, tomate, pepino, feta y nueces (1/2 plato) + 2 pechugas troceadas, llevadas de la comida (1/4-1/2 plato proteína)\nOpción B: Menú del día — pechuga o doblecheese (1/4 plato) + patata cocida (1/4 plato) + huevo duro o atún + ensalada (1/2 plato)", note:"El wrap de beef+provolone+salsa miel-mostaza queda como excepción ocasional, más denso en calorías y procesado." }
+    ],
+    batchCooking: null
+  },
+  {
+    short: "Noc",
+    full: "Turno Noche (23:00–07:00)",
+    sport: "🏋️🏃 Fuerza + cardio (cinta / carrera rotativo)",
+    sportClass: "fuerza",
+    sportBanner: "~1h30 aprox. · 600 kcal. Rotación cardio: 2 bloques cinta con pendiente, 1 bloque carrera. Tomar 400ml agua + aminoácidos intra-entreno.",
+    suppl: null,
+    libre: false,
+    meals: [
+      { type:"D", time:"10:00 (pre-gym)", name:"Desayuno pre-entreno", tags:[], desc:"Opción A: Avena con leche de soja (1 taza) + fruta abundante (ración generosa) + café\nOpción B: Tostada integral 1-2 rebanadas + philadelphia (1 cucharada) + fruta abundante (ración generosa) + café", note:"Entreno más largo y con cardio — priorizar la opción con más HC de asimilación gradual (avena)." },
+      { type:"C", time:"Al salir del gym", name:"Comida", tags:[], desc:"Opción A: Ensalada propia con tomate, feta, nueces, maíz, atún, lechuga, cebolla y pepino (1/2 plato) + pechuga troceada (1/4 plato)\nOpción B: Pechuga de pollo (1/4 plato) + arroz (1/4 plato) + huevo duro 1 ud + fruta abundante (ración generosa)", note:"" },
+      { type:"Me", time:"Antes de dormir (duerme ~3h antes del turno)", name:"Merienda corta", tags:[], desc:"Opción A: Fruta abundante (ración generosa)\nOpción B: Algo ligero tipo desayuno si no hay fruta — ej. tostada pequeña con philadelphia (1 cucharada)", note:"Mantener ligera por digestión, dado que duerme poco tiempo antes de entrar al turno." },
+      { type:"Ce", time:"00:00 (recena, en el turno)", name:"Cena / recena", tags:[], desc:"Opción A: Revuelto de 3-4 huevos (1/4-1/2 plato) + pavo (un puñado) + queso cottage (2-3 cucharadas) + fruta abundante (ración generosa)\nOpción B: Alternativa disponible más cercana a esta estructura (1/4 plato proteína aprox.), evitando bacon/hamburguesa como base", note:"El yogur adicional a media noche es buena estrategia para mantener energía durante el turno — mantenerlo." }
+    ],
+    batchCooking: null
+  },
+  {
+    short: "Sal",
+    full: "Saliente de turno de noche",
+    sport: "😴 Sin entrenamiento",
+    sportClass: "rest",
+    sportBanner: "Día de recuperación tras el turno de noche. Duerme hasta ~14:00. Prioridad: descanso.",
+    suppl: null,
+    libre: false,
+    meals: [
+      { type:"C", time:"~14:00 (al despertar)", name:"Comida principal única de mañana-mediodía", tags:[], desc:"Opción A: Tortilla de 3-4 huevos con pavo (1/4-1/2 plato) + arroz (1/4 plato) + fruta abundante (ración generosa)\nOpción B: Avena con leche (1 taza) + tostadas de pan integral 1-2 rebanadas + queso cottage (2-3 cucharadas) + fruta abundante (ración generosa)", note:"Único evento de comida principal hasta la cena — que sea completo, con buena densidad de proteína e hidratos." },
+      { type:"Me", time:"Tarde, si hay hambre", name:"Merienda (opcional)", tags:[], desc:"Opción A: Fruta abundante (ración generosa)\nOpción B: Sin merienda si no hay hambre real", note:"" },
+      { type:"Ce", time:"19:00 (comedor) o 23:00 (recena) según hora de la comida", name:"Cena", tags:[], desc:"Opción A (cena pronto, comedor): menú del día priorizando pechuga o atún (1/4 plato) + ensalada (1/2 plato)\nOpción B (cena tarde, recena): estructura tipo turno noche — huevos, pavo, queso cottage (2-3 cucharadas) y fruta abundante", note:"Depende de a qué hora haya sido la comida al despertar." }
+    ],
+    batchCooking: null
+  },
+  {
+    short: "Des",
+    full: "Descanso",
+    sport: "🏋️ Fuerza — Pierna/hombro",
+    sportClass: "fuerza",
+    sportBanner: "~1h30 aprox. (kcal pendiente de confirmar).",
+    suppl: null,
+    libre: false,
+    meals: [
+      { type:"D", time:"10:00 (pre-gym)", name:"Desayuno pre-entreno", tags:[], desc:"Opción A: Tostada integral 1-2 rebanadas + aceite de oliva (1 cucharada) + café + fruta abundante (ración generosa)\nOpción B: Avena con leche de soja (1 taza) + fruta abundante (ración generosa) + café", note:"" },
+      { type:"C", time:"Al salir del gym", name:"Comida", tags:[], desc:"Opción A: Ensalada propia (1/2 plato) + pechuga troceada (1/4 plato) + batata cocida (1/4 plato)\nOpción B: Pechuga (1/4 plato) + arroz (1/4 plato) + huevo duro 1 ud + fruta abundante (ración generosa)", note:"" },
+      { type:"Ce", time:"18:30", name:"Cena", tags:[], desc:"Opción A: Menú del día priorizando pechuga o atún (1/4 plato) + ensalada (1/2 plato)\nOpción B: Ensalada (1/2 plato) + huevo duro 2 uds + fruta abundante (ración generosa)", note:"Si hay hambre antes de dormir, fruta como opción por defecto." }
+    ],
+    batchCooking: null
+  }
+];
+
+const shopCategories = [
+  { label: "🫘 Proteínas", cls: "cat-prot", items: [
+    { name: "Pechuga de pollo / pavo", qty: "Base habitual" },
+    { name: "Atún", qty: "Base habitual" },
+    { name: "Huevo (cocido / revuelto)", qty: "Base habitual" },
+    { name: "Queso cottage", qty: "Base habitual" },
+    { name: "Hamburguesa suelta / doblecheese", qty: "Ocasional" },
+    { name: "Bacon, meatloaf, \"americanadas\"", qty: "Excepción puntual" }
+  ]},
+  { label: "🌾 Carbohidratos", cls: "cat-carb", items: [
+    { name: "Batata / patata cocida", qty: "Base habitual" },
+    { name: "Arroz (menú del día)", qty: "Base habitual" },
+    { name: "Avena instantánea", qty: "Base habitual" },
+    { name: "Tostada integral", qty: "Base habitual" },
+    { name: "Pancake + sirope de arce", qty: "Evitar (no le gustan)" },
+    { name: "Cereales azucarados (Froot Loops, Raisin Bran, Corn Pops)", qty: "Excepción muy puntual" }
+  ]},
+  { label: "🥑 Grasas", cls: "cat-fat", items: [
+    { name: "Aceite de oliva (si disponible en tostada)", qty: "Base habitual" },
+    { name: "Nueces (ensalada propia)", qty: "Base habitual" },
+    { name: "Queso feta (moderado)", qty: "Base habitual" },
+    { name: "Philadelphia", qty: "Ocasional" }
+  ]},
+  { label: "🧄 Extras y bebidas", cls: "cat-extra", items: [
+    { name: "Fruta entera (melón, sandía, piña, plátano, uva)", qty: "Base habitual — la más importante" },
+    { name: "Leche de soja (Pearl)", qty: "Priorizar sobre leche de vaca" },
+    { name: "Café solo", qty: "Libre" },
+    { name: "Yogur (Yoggi, Arla Øko)", qty: "Base habitual como merienda" },
+    { name: "Barritas / snacks proteicos (Nutri-Grain, Kellogg's)", qty: "Herramienta logística, no sustituto habitual" },
+    { name: "Zumos (Juicy Juice, Ruby Kist)", qty: "Evitar como bebida habitual" },
+    { name: "Refrescos (Coca-Cola, Fanta)", qty: "Excepción muy puntual" }
+  ]}
+];
+
+function badgeClass(type, libre) {
+  if (libre) return "badge-libre";
+  const map = { D:"badge-d", A:"badge-a", Me:"badge-me", C:"badge-c", Ce:"badge-ce" };
+  return map[type] || "badge-c";
+}
+function badgeLabel(type, libre) {
+  if (libre) return "Libre";
+  const map = { D:"Desayuno", A:"Almuerzo", Me:"Merienda", C:"Comida", Ce:"Cena" };
+  return map[type] || type;
+}
+
+let current = 0;
+
+function render() {
+  const d = days[current];
+  let html = `<div style="font-size:18px;font-weight:500;color:#111;margin-bottom:8px">${d.full}</div>`;
+  html += `<div class="pn-sport-banner ${d.sportClass}">${d.sport} — ${d.sportBanner}</div>`;
+  if (d.libre) html += `<div class="pn-libre-banner">Este día incluye una comida libre.</div>`;
+  if (d.suppl) html += `<div class="pn-supp-banner">` + d.suppl.replace(/\n/g,"<br>") + `</div>`;
+  html += `<div class="pn-meals">`;
+  d.meals.forEach(m => {
+    const bc = badgeClass(m.type, m.libre);
+    const bl = badgeLabel(m.type, m.libre);
+    const rawParts = m.desc.split(/\n/).map(s => s.trim()).filter(s => s.length > 0);
+    let ingsHtml = rawParts.map(part => `<span class="pn-ing">${part}</span>`).join("");
+    html += `
+      <div class="pn-card">
+        <div class="pn-meal-header">
+          <span class="pn-badge ${bc}">${bl}</span>
+          <span class="pn-time">${m.time}</span>
+        </div>
+        <div class="pn-name">${m.name}</div>
+        <div class="pn-ing-list">${ingsHtml}</div>
+        ${m.note ? `<div class="pn-note">${m.note}</div>` : ""}
+      </div>`;
+  });
+  html += `</div>`;
+  document.getElementById("dayView").innerHTML = html;
+}
+
+function buildTabs() {
+  const container = document.getElementById("dayTabs");
+  days.forEach((d, i) => {
+    const btn = document.createElement("button");
+    btn.className = "pn-day-btn" + (i === 0 ? " active" : "");
+    btn.textContent = d.short;
+    btn.onclick = () => {
+      document.querySelectorAll(".pn-day-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      current = i;
+      render();
+    };
+    container.appendChild(btn);
+  });
+}
+
+let shopCurrent = 0;
+
+function renderShop() {
+  const cat = shopCategories[shopCurrent];
+  let html = '<div class="pn-shop-list">';
+  cat.items.forEach(item => {
+    html += `<div class="pn-shop-item ${cat.cls}" onclick="this.classList.toggle('done')">
+      <div class="pn-shop-item-name">${item.name}</div>
+      <div class="pn-shop-item-qty">${item.qty}</div>
+    </div>`;
+  });
+  html += '</div>';
+  document.getElementById("shopView").innerHTML = html;
+}
+
+function buildShopTabs() {
+  const container = document.getElementById("shopTabs");
+  shopCategories.forEach((cat, i) => {
+    const btn = document.createElement("button");
+    btn.className = "pn-shop-btn " + cat.cls + (i === 0 ? " active" : "");
+    btn.textContent = cat.label;
+    btn.onclick = () => {
+      document.querySelectorAll(".pn-shop-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      shopCurrent = i;
+      renderShop();
+    };
+    container.appendChild(btn);
+  });
+}
+
+buildTabs();
+render();
+buildShopTabs();
+renderShop();
+</script>
+
+</body>
+</html>
