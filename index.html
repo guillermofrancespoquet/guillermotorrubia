@@ -203,11 +203,21 @@
       <div class="pn-imp-item"><div class="pn-imp-dot pn-imp-dot-amber"></div><div><strong>Hidratación a vigilar.</strong> Agua local de mineralización muy baja + clima cálido-húmedo + entrenos con sudoración alta → mayor riesgo de pérdida de electrolitos. Se incluye recomendación específica más abajo.</div></div>
       <div class="pn-imp-item"><div class="pn-imp-dot pn-imp-dot-amber"></div><div><strong>Entorno alimentario limitado.</strong> El comedor es predominantemente animal/procesado (huevo, embutido, cereales azucarados, bollería). El plan trabaja dentro de esas opciones priorizando lo más favorable, no plantea una dieta ideal desde cero.</div></div>
       <div class="pn-imp-item"><div class="pn-imp-dot pn-imp-dot-green"></div><div><strong>Buena base disponible.</strong> Hay proteína magra simple (pechuga, pavo, atún, huevo), fruta entera variada y leche de soja (Pearl) en el comedor — suficiente para construir una estructura sólida.</div></div>
+      <div class="pn-imp-item"><div class="pn-imp-dot pn-imp-dot-blue"></div><div><strong>Cambio de formato.</strong> Tras su feedback, dejamos de plantear opciones A/B/C para elegir: cuando hay menú del comedor disponible, el plato de cada franja horaria ya viene decidido, con las cantidades resueltas en fracciones de plato de Harvard — no hace falta comparar ni adivinar raciones.</div></div>
     </div>
   </div>
 </div>
 
+<div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid #e5e5e5;">
+  <div class="section-label">Menú determinado de la semana (14-20 sept)</div>
+  <p style="font-size:12px;color:#888;margin-bottom:1rem;line-height:1.6;">Ya no tienes que elegir ni combinar — cada día trae la comida ya decidida, combinando <strong>lo fijo</strong> (pechuga, atún, huevo, ensalada propia, batata/patata, wrap, hamburguesa suelta) con lo mejor de <strong>lo variable</strong> de esta semana concreta, priorizando siempre la opción más magra y menos procesada. Las cantidades vienen resueltas en fracciones de plato de Harvard (mitad verdura, un cuarto proteína, un cuarto hidrato). Los platos se mantienen en inglés tal cual aparecen en el menú, para identificarlos fácil in situ. <strong>Midnight</strong> = recena, <strong>Lunch</strong> = comida, <strong>Dinner</strong> = cena — usa el bloque que corresponda a tu horario según el turno de ese día.</p>
+  <div class="pn-days" id="weekTabs"></div>
+  <div id="weekView"></div>
+</div>
+
 <hr class="pn-perfil-divider">
+
+<p style="font-size:12px;color:#999;font-style:italic;margin-bottom:1rem;">A partir de aquí, estructura general de referencia — válida para las semanas en las que aún no tengamos el menú real del comedor. Cuando sí lo tengamos, usa la sección de arriba, "Menú determinado de la semana".</p>
 
 <div id="printArea" style="margin-bottom:1.5rem">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.85rem;padding-bottom:0.4rem;border-bottom:1px solid #e8e8e8;">
@@ -281,13 +291,6 @@
   <div class="section-label">Guía de elección en buffet</div>
   <div class="pn-shop-tabs" id="shopTabs"></div>
   <div id="shopView"></div>
-</div>
-
-<div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid #e5e5e5;">
-  <div class="section-label">Menú semanal real del comedor (7-13 sept) — qué elegir</div>
-  <p style="font-size:12px;color:#888;margin-bottom:1rem;line-height:1.6;">Los platos se mantienen en inglés tal cual aparecen en el menú del comedor, para que sea más fácil identificarlos in situ. <strong>Midnight</strong> = recena, <strong>Lunch</strong> = comida, <strong>Dinner</strong> = cena — usa el bloque que corresponda a tu horario según el turno de ese día.</p>
-  <div class="pn-days" id="weekTabs"></div>
-  <div id="weekView"></div>
 </div>
 
 <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid #e5e5e5;">
@@ -425,53 +428,53 @@ const shopCategories = [
 
 const weekMenu = [
   {
-    short: "Lun 7",
-    full: "Monday 7 Sept",
-    midnight: { dish: "Caribbean Beef Curry", sides: ["Steamed Rice", "Green Beans w/Mushrooms"], note: "Plato fijo de la noche — ración normal, es solo una vez." },
-    lunch: { mains: [{n:"Grilled Honey Sriracha Chicken Breast", best:true},{n:"Shrimp Kabob", best:true},{n:"BBQ Pork Loin", best:false}], sides: ["Macaroni and Cheese", "Wild Rice", "Corn on the Cobb", "Rosemary Carrots", "Green Beans w/Feta Cheese"], tip: "Mejor elección: Grilled Honey Sriracha Chicken Breast o Shrimp Kabob. De guarnición, prioriza Rosemary Carrots, Corn on the Cobb o Green Beans sobre el Macaroni and Cheese." },
-    dinner: { mains: [{n:"Pasta Primavera", best:false},{n:"Caribbean Beef Curry", best:false},{n:"Chicken Scampi", best:true}], sides: ["Lyonnaise Rice", "Roasted Pepper Potatoes", "Corn", "Cauliflower", "Carrots"], tip: "Mejor elección: Chicken Scampi. De guarnición, Corn, Cauliflower o Carrots mejor que abusar de las Roasted Pepper Potatoes." }
+    short: "Lun 14",
+    full: "Monday 14 Sept",
+    midnight: { dish: "Fried Shrimp", qty: "1/4 plato", sides: [{n:"Steamed Rice", qty:"1/4 plato"},{n:"Herbed Green Beans", qty:"1/2 plato"}], note: "Plato fijo de la noche — al ser fritos, ración normal sin repetir." },
+    lunch: { dish: "Basil Baked Fish", qty: "1/4 plato", sides: [{n:"Brown Rice", qty:"1/4 plato"},{n:"Carrots", qty:"1/2 plato"}], note: "Pescado al horno, magro. + fruta abundante de postre." },
+    dinner: { dish: "Chicken Scampi", qty: "1/4 plato", sides: [{n:"Steamed Rice", qty:"1/4 plato"},{n:"Peas and Carrots + Broccoli", qty:"1/2 plato"}], note: "Pollo salteado, magro. + fruta abundante de postre." }
   },
   {
-    short: "Mar 8",
-    full: "Tuesday 8 Sept",
-    midnight: { dish: "Baja Cod Fish", sides: ["Brown Rice", "Broccoli Combo"], note: "Plato fijo — pescado, muy buena opción para esa hora." },
-    lunch: { mains: [{n:"Beef Stir Fry", best:false},{n:"Vegetarian Lasagna", best:false},{n:"Tuscan Chicken", best:true}], sides: ["Mashed Potatoes", "Steamed Rice", "Stir Fry Cabbage", "Green Beans", "Okra Melange"], tip: "Mejor elección: Tuscan Chicken. De guarnición, Stir Fry Cabbage, Green Beans u Okra Melange mejor que abusar del Mashed Potatoes." },
-    dinner: { mains: [{n:"BBQ Pork Loin", best:false},{n:"Baja Cod Fish", best:true},{n:"Greek Lemon Chicken", best:true}], sides: ["Brown Rice", "Scalloped Potatoes", "Broccoli Combo", "Parmesan Brussel Sprouts", "Mediterranean Asparagus"], tip: "Mejor elección: Baja Cod Fish o Greek Lemon Chicken, ambas magras. Broccoli Combo, Brussel Sprouts o Asparagus mejor que el Scalloped Potatoes (más graso)." }
+    short: "Mar 15",
+    full: "Tuesday 15 Sept",
+    midnight: { dish: "Meatloaf", qty: "1/4 plato", sides: [{n:"Mexican Rice", qty:"1/4 plato"},{n:"Hacienda Green Beans", qty:"1/2 plato"}], note: "Plato fijo de la noche — más procesado que otras noches, ración normal." },
+    lunch: { dish: "Lemon Pepper Catfish", qty: "1/4 plato", sides: [{n:"Black Eyed Peas", qty:"1/4 plato"},{n:"Cauliflower Combo", qty:"1/2 plato"}], note: "Pescado magro + legumbre como hidrato. + fruta abundante de postre." },
+    dinner: { dish: "Beef Fajitas", qty: "1/4 plato", sides: [{n:"Mexican Rice", qty:"1/4 plato"},{n:"Hacienda Green Beans + Roasted Brussel Sprouts", qty:"1/2 plato"}], note: "Carne magra salteada. + fruta abundante de postre." }
   },
   {
-    short: "Mié 9",
-    full: "Wednesday 9 Sept",
-    midnight: { dish: "Ginger BBQ Chicken", sides: ["Baked Potato Halves", "Corn O'Brien"], note: "Plato fijo, buena opción de proteína magra." },
-    lunch: { mains: [{n:"Lasagna", best:false},{n:"Cajun Chicken Breast", best:true},{n:"Shrimp Jambalaya", best:true}], sides: ["Brown Rice", "Potato and Herbs", "Creole Green Beans", "Roasted Butternut Squash", "Peas"], tip: "Mejor elección: Cajun Chicken Breast o Shrimp Jambalaya. Creole Green Beans, Butternut Squash o Peas mejor que abusar del Potato and Herbs." },
-    dinner: { mains: [{n:"Ginger BBQ Chicken", best:true},{n:"Roast Pork Tenderloin", best:true},{n:"Stir Fry Tofu w/Vegetables", best:false}], sides: ["Baked Potato Halves", "Steamed Brown Rice", "Corn O'Brien", "Roasted Brussel Sprouts", "Sauteed Cabbage/Bacon"], tip: "Mejor elección: Ginger BBQ Chicken o Roast Pork Tenderloin (el Tofu también es válido si apetece variar). Roasted Brussel Sprouts o Corn O'Brien mejor que el Sauteed Cabbage/Bacon, por el bacon." }
+    short: "Mié 16",
+    full: "Wednesday 16 Sept",
+    midnight: { dish: "Grilled Steak", qty: "1/4 plato", sides: [{n:"Rice Pilaf", qty:"1/4 plato"},{n:"Spinach", qty:"1/2 plato"}], note: "Plato fijo de la noche — buena opción magra." },
+    lunch: { dish: "Mediterranean Salmon", qty: "1/4 plato", sides: [{n:"Brown Rice", qty:"1/4 plato"},{n:"Green Beans w/Feta", qty:"1/2 plato"}], note: "Salmón — de sus favoritos. + fruta abundante de postre." },
+    dinner: { dish: "Grilled Steak", qty: "1/4 plato", sides: [{n:"Steamed Rice", qty:"1/4 plato"},{n:"Spinach + Cajun Vegetables", qty:"1/2 plato"}], note: "Para variar del pescado de la comida. + fruta abundante de postre." }
   },
   {
-    short: "Jue 10",
-    full: "Thursday 10 Sept",
-    midnight: { dish: "Cantonese Spareribs", sides: ["Crispy Potato Wedges", "Corn"], note: "Plato fijo algo más graso que otras noches (costillas + patatas fritas) — ración normal, no pasa nada por una noche." },
-    lunch: { mains: [{n:"Chicken Breast Parmesan", best:false},{n:"Meatloaf", best:false},{n:"Grilled Citrus Salmon", best:true}], sides: ["Spicy Brown Pilaf", "Mashed Potatoes", "Broccoli", "Herbed Green Beans", "Carrots"], tip: "Mejor elección: Grilled Citrus Salmon — el salmón que mejor le sienta y más le gusta. Broccoli, Herbed Green Beans o Carrots mejor que abusar del Mashed Potatoes." },
-    dinner: { mains: [{n:"Cantonese Spareribs", best:false},{n:"Citrus Herb Chicken", best:true},{n:"Pasta Toscano", best:false}], sides: ["Quinoa and Garbanzo Beans", "Crispy Potato Wedges", "Okra Medley", "Corn on the Cobb", "Green Beans w/Mushrooms"], tip: "Mejor elección: Citrus Herb Chicken. El Quinoa and Garbanzo Beans es muy buena guarnición (cereal + legumbre) — priorizarla sobre las Crispy Potato Wedges." }
+    short: "Jue 17",
+    full: "Thursday 17 Sept",
+    midnight: { dish: "Chicken Stir Fry", qty: "1/4 plato", sides: [{n:"Steamed Rice", qty:"1/4 plato"},{n:"Herbed Green Beans", qty:"1/2 plato"}], note: "Plato fijo de la noche — buena opción magra." },
+    lunch: { dish: "Jerk Roast Turkey", qty: "1/4 plato", sides: [{n:"Brown Rice", qty:"1/4 plato"},{n:"Peas w/Mushrooms/Onions", qty:"1/2 plato"}], note: "Pavo asado, magro, sabor diferente. + fruta abundante de postre." },
+    dinner: { dish: "Chicken/Broccoli Stir Fry", qty: "1/4-1/2 plato (verdura ya integrada)", sides: [{n:"Steamed Rice", qty:"1/4 plato"},{n:"Herb Green Beans", qty:"complementa si hace falta más verdura"}], note: "Plato práctico, proteína y verdura ya combinadas. + fruta abundante de postre." }
   },
   {
-    short: "Vie 11",
-    full: "Friday 11 Sept",
-    midnight: { dish: "Lemon Garlic Baked Fish", sides: ["Mashed Potatoes", "Glazed Carrots"], note: "Plato fijo, pescado al horno — muy buena opción de noche." },
-    lunch: { mains: [{n:"Polish Sausage", best:false},{n:"Basil Baked Fish", best:true},{n:"Spaghetti w/Marinara Sauce", best:false}], sides: ["Steamed Rice", "Parsley Potatoes", "Roasted Peppers/Onions", "Roasted Brussel Sprouts", "Mixed Vegetables"], tip: "Mejor elección: Basil Baked Fish. Evitar el Polish Sausage como base habitual (embutido). Roasted Peppers/Onions, Brussel Sprouts o Mixed Vegetables mejor que abusar del Parsley Potatoes." },
-    dinner: { mains: [{n:"Lemon Garlic Baked Fish", best:true},{n:"Chicken Fajitas", best:true},{n:"Syrian Beef Stew", best:false}], sides: ["Mexican Rice", "Mashed Potatoes", "Mexican Street Corn", "Ginger Glazed Carrots", "Cauliflower Parmesan"], tip: "Mejor elección: Lemon Garlic Baked Fish o Chicken Fajitas. Ginger Glazed Carrots o Cauliflower Parmesan mejor que doblar ración de Mashed Potatoes." }
+    short: "Vie 18",
+    full: "Friday 18 Sept",
+    midnight: { dish: "Chicken Florentine", qty: "1/4 plato", sides: [{n:"Oven Brown Potatoes", qty:"1/4 plato"},{n:"Broccoli", qty:"1/2 plato"}], note: "Plato fijo de la noche — buena opción magra." },
+    lunch: { dish: "Grilled Mustard Chicken", qty: "1/4 plato", sides: [{n:"Brown Rice Pilaf", qty:"1/4 plato"},{n:"Roasted Cauliflower", qty:"1/2 plato"}], note: "Pollo a la parrilla, magro. + fruta abundante de postre." },
+    dinner: { dish: "Parmesan Fish", qty: "1/4 plato", sides: [{n:"Italian Style Beans", qty:"1/4 plato"},{n:"Carrots on the Griddle + Broccoli", qty:"1/2 plato"}], note: "Pescado con legumbre como hidrato. + fruta abundante de postre." }
   },
   {
-    short: "Sáb 12",
-    full: "Saturday 12 Sept",
-    midnight: { dish: "Chicken Kabob", sides: ["Hoppin John Rice", "Green Beans"], note: "Plato fijo, buena opción magra." },
-    lunch: { mains: [{n:"Grilled Pork Chops", best:true},{n:"Braised BBQ Beef", best:false},{n:"Cajun Chicken Sandwich", best:false}], sides: ["Brown Rice", "Cottage Fried Potatoes", "Braised Cabbage", "Corn on the Cobb", "Cauliflower"], tip: "Mejor elección: Grilled Pork Chops. Braised Cabbage, Corn on the Cobb o Cauliflower mejor que las Cottage Fried Potatoes (fritas)." },
-    dinner: { mains: [{n:"Roasted Pasta Primavera", best:false},{n:"Chicken Kabob", best:true},{n:"Blackened Shrimp", best:true}], sides: ["Glazed Sweet Potatoes", "Hoppin John Rice", "Peas w/Onions", "Spinach", "Squash"], tip: "Mejor elección: Chicken Kabob o Blackened Shrimp. Peas w/Onions, Spinach o Squash mejor que abusar de las Glazed Sweet Potatoes (con azúcar añadido)." }
+    short: "Sáb 19",
+    full: "Saturday 19 Sept",
+    midnight: { dish: "Tuscan Chicken Breast", qty: "1/4 plato", sides: [{n:"Baked Sweet Potatoes", qty:"1/4 plato"},{n:"Southern Style Greens", qty:"1/2 plato"}], note: "Plato fijo de la noche — muy buena opción magra." },
+    lunch: { dish: "Parmesan Pork Chops", qty: "1/4 plato", sides: [{n:"Steamed Rice", qty:"1/4 plato"},{n:"Green Beans + Roasted Brussel Sprouts", qty:"1/2 plato"}], note: "Cerdo magro empanado, para variar. + fruta abundante de postre." },
+    dinner: { dish: "Sweet and Spicy Salmon", qty: "1/4 plato", sides: [{n:"Red Beans and Rice", qty:"1/4 plato"},{n:"Southern Style Greens + Broccoli", qty:"1/2 plato"}], note: "Salmón, aparece pocas veces — aprovecharlo. + fruta abundante de postre." }
   },
   {
-    short: "Dom 13",
-    full: "Sunday 13 Sept",
-    midnight: { dish: "Herb Baked Chicken Breast", sides: ["Steamed Rice", "Green Beans w/Mushrooms"], note: "Plato fijo, muy buena opción magra para cerrar la semana." },
-    lunch: { mains: [{n:"Marinated Tomatoes w/Penne Pasta", best:false},{n:"Simmered Beef", best:true},{n:"Cordon Bleu", best:false}], sides: ["Steamed Rice", "Mashed Potatoes", "Rosemary Carrots", "Corn Combo", "Broccoli Parmesan"], tip: "Mejor elección: Simmered Beef como base. El Cordon Bleu (empanado, relleno de queso) es más calórico — válido como capricho puntual de domingo, no como base habitual. Elige solo una fuente de HC entre Steamed Rice y Mashed Potatoes, no ambas." },
-    dinner: { mains: [{n:"Beef Stew", best:false},{n:"Herb Baked Chicken Breast", best:true},{n:"Lemon Baked Fish", best:true}], sides: ["Mashed Potatoes", "Steamed Rice", "Green Beans w/Mushrooms", "Stir Fry Vegetables", "Cauliflower"], tip: "Mejor elección: Herb Baked Chicken Breast o Lemon Baked Fish. Green Beans, Stir Fry Vegetables o Cauliflower mejor que doblar ración de patata/arroz." }
+    short: "Dom 20",
+    full: "Sunday 20 Sept",
+    midnight: { dish: "Roast Beef", qty: "1/4 plato", sides: [{n:"Dirty Rice", qty:"1/4 plato"},{n:"Mixed Vegetables", qty:"1/2 plato"}], note: "Plato fijo de la noche — carne magra asada." },
+    lunch: { dish: "Ginger Pot Roast", qty: "1/4 plato", sides: [{n:"Steamed Rice", qty:"1/4 plato"},{n:"Carrots + Corn Combo", qty:"1/2 plato"}], note: "Carne magra asada, sabor diferente para cerrar la semana. + fruta abundante de postre." },
+    dinner: { dish: "Lemon Garlic Stuffed Fish", qty: "1/4 plato", sides: [{n:"Black Eyed Peas", qty:"1/4 plato"},{n:"Carrots on the Griddle + Mixed Vegetables", qty:"1/2 plato"}], note: "Pescado con legumbre como hidrato. + fruta abundante de postre." }
   }
 ];
 
@@ -564,39 +567,25 @@ function buildShopTabs() {
 
 let weekCurrent = 0;
 
-function mealPill(name, best) {
-  return `<span class="pn-ing" style="${best ? "background:#EAF3DE;border-color:#C0DD97;color:#3B6D11;font-weight:600;" : ""}">${best ? "✅ " : ""}${name}</span>`;
+function weekMealCard(badge, block) {
+  const allItems = [{ n: block.dish, q: block.qty }, ...block.sides.map(s => ({ n: s.n, q: s.qty }))];
+  const pills = allItems.map(it => `<span class="pn-ing"><strong>${it.n}</strong> — ${it.q}</span>`).join("");
+  return `
+    <div class="pn-card">
+      <div class="pn-meal-header"><span class="pn-badge ${badge}">${badge === "badge-me" ? "Midnight" : badge === "badge-c" ? "Lunch" : "Dinner"}</span></div>
+      <div class="pn-name">${block.dish}</div>
+      <div class="pn-ing-list">${pills}</div>
+      <div class="pn-note">${block.note}</div>
+    </div>`;
 }
 
 function renderWeek() {
   const d = weekMenu[weekCurrent];
   let html = `<div style="font-size:18px;font-weight:500;color:#111;margin-bottom:10px">${d.full}</div>`;
   html += `<div class="pn-meals">`;
-
-  html += `
-    <div class="pn-card">
-      <div class="pn-meal-header"><span class="pn-badge badge-me">Midnight</span></div>
-      <div class="pn-name">${d.midnight.dish}</div>
-      <div class="pn-ing-list">${d.midnight.sides.map(s => `<span class="pn-ing">${s}</span>`).join("")}</div>
-      <div class="pn-note">${d.midnight.note}</div>
-    </div>`;
-
-  html += `
-    <div class="pn-card">
-      <div class="pn-meal-header"><span class="pn-badge badge-c">Lunch</span></div>
-      <div class="pn-ing-list">${d.lunch.mains.map(m => mealPill(m.n, m.best)).join("")}</div>
-      <div class="pn-ing-list">${d.lunch.sides.map(s => `<span class="pn-ing">${s}</span>`).join("")}</div>
-      <div class="pn-note">${d.lunch.tip}</div>
-    </div>`;
-
-  html += `
-    <div class="pn-card">
-      <div class="pn-meal-header"><span class="pn-badge badge-ce">Dinner</span></div>
-      <div class="pn-ing-list">${d.dinner.mains.map(m => mealPill(m.n, m.best)).join("")}</div>
-      <div class="pn-ing-list">${d.dinner.sides.map(s => `<span class="pn-ing">${s}</span>`).join("")}</div>
-      <div class="pn-note">${d.dinner.tip}</div>
-    </div>`;
-
+  html += weekMealCard("badge-me", d.midnight);
+  html += weekMealCard("badge-c", d.lunch);
+  html += weekMealCard("badge-ce", d.dinner);
   html += `</div>`;
   document.getElementById("weekView").innerHTML = html;
 }
