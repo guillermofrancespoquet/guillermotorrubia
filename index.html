@@ -159,7 +159,7 @@
     </div>
     <div style="background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:6px 12px;font-size:12px;color:#333;">
       <span style="color:#999;font-size:10px;text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:2px;">Aversiones / exclusiones</span>
-      Pancake y sirope de arce (no le gustan — se evitan de forma natural)
+      Pancake y sirope de arce (no te gustan — se evitan de forma natural)
     </div>
   </div>
 </div>
@@ -208,7 +208,7 @@
   </div>
 </div>
 
-<div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid #e5e5e5;">
+<div style="margin-top:2.5rem;">
   <div class="section-label">Menú determinado de la semana (14-20 sept)</div>
   <p style="font-size:12px;color:#888;margin-bottom:1rem;line-height:1.6;">Ya no tienes que elegir ni combinar — cada día trae la comida ya decidida, combinando <strong>lo fijo</strong> (pechuga, atún, huevo, ensalada propia, batata/patata, wrap, hamburguesa suelta) con lo mejor de <strong>lo variable</strong> de esta semana concreta, priorizando siempre la opción más magra y menos procesada. Las cantidades vienen resueltas en fracciones de plato de Harvard (mitad verdura, un cuarto proteína, un cuarto hidrato). Los platos se mantienen en inglés tal cual aparecen en el menú, para identificarlos fácil in situ. <strong>Midnight</strong> = recena, <strong>Lunch</strong> = comida, <strong>Dinner</strong> = cena — usa el bloque que corresponda a tu horario según el turno de ese día.</p>
   <div class="pn-days" id="weekTabs"></div>
@@ -274,7 +274,7 @@
   </div>
 </div>
 
-<div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid #e5e5e5;">
+<div style="margin-top:2.5rem;">
   <div class="section-label">Menú desarrollado por tipo de turno</div>
   <div class="pn-days" id="dayTabs"></div>
   <div id="dayView"></div>
@@ -287,13 +287,13 @@
   </div>
 </div>
 
-<div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid #e5e5e5;">
+<div style="margin-top:2.5rem;">
   <div class="section-label">Guía de elección en buffet</div>
   <div class="pn-shop-tabs" id="shopTabs"></div>
   <div id="shopView"></div>
 </div>
 
-<div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid #e5e5e5;">
+<div style="margin-top:2.5rem;">
   <div class="section-label">Suplementación recomendada</div>
   <div class="pn-supl-block">
     <div class="pn-supl-item">
@@ -318,7 +318,7 @@ const days = [
     suppl: null,
     libre: false,
     meals: [
-      { type:"D", time:"6:00", name:"Desayuno pre-gym (30 min antes)", tags:[], desc:"Opción A: Revuelto de 2-3 huevos (1/4 plato) + pavo, cebolla y tomate (1/2 plato) + 1 tostada integral + café\nOpción B: Tostada integral 1-2 rebanadas + queso cottage (2-3 cucharadas) + fruta abundante — melón, sandía o piña (ración generosa) + café", note:"Sin champiñón ni pimiento (no acaban de convencerle en la tortilla). Tostada añadida para dar un poco de variedad de sabor. Café sin azúcar." },
+      { type:"D", time:"6:00", name:"Desayuno pre-gym (30 min antes)", tags:[], desc:"Opción A: Revuelto de 2-3 huevos (1/4 plato) + pavo, cebolla y tomate (1/2 plato) + 1 tostada integral + café\nOpción B: Tostada integral 1-2 rebanadas + queso cottage (2-3 cucharadas) + fruta abundante — melón, sandía o piña (ración generosa) + café", note:"Sin champiñón ni pimiento (no te acaban de convencer en la tortilla). Tostada añadida para dar un poco de variedad de sabor. Café sin azúcar." },
       { type:"C", time:"13:00", name:"Comida (se pide en el turno)", tags:[], desc:"Opción A: Pechuga de pollo (1/4 plato) + batata, patata cocida o arroz (1/4 plato) + huevo duro 1 ud + fruta abundante (ración generosa)\nOpción B: Ensalada de lechuga, tomate, pepino y atún (1/2 plato) + batata, patata cocida o arroz (1/4 plato) + fruta abundante (ración generosa)\nOpción C (si hay enchiladas disponibles): Enchiladas de pollo, 2 unidades (1/4-1/2 plato) + fruta abundante (ración generosa)", note:"El arroz es intercambiable por la batata/patata cocida en cualquier opción, mismo grupo de hidrato. Las enchiladas son más calóricas y procesadas que la ensalada o la pechuga simple, pero su disponibilidad limitada en el menú ya actúa como freno natural — disfrutarlas cuando estén. Si hay salmón disponible ese día, es la mejor opción de proteína del menú, priorizarlo." },
       { type:"Me", time:"Al levantar de la siesta, pre-gym", name:"Merienda pre-entreno", tags:[], desc:"Opción A: Fruta abundante, la que haya (ración generosa)\nOpción B: Batido de proteína con agua (1 vaso) o snack proteico 12g (1 unidad)", note:"Cualquiera de tus 3 opciones habituales está bien; fruta como primera opción si hay variedad disponible." },
       { type:"Ce", time:"23:00 (recena, tras gym)", name:"Cena / recena", tags:[], desc:"Opción A: Revuelto de 2-3 huevos (1/4 plato) + pavo (un puñado) + queso cottage (2-3 cucharadas) + fruta abundante (ración generosa)\nOpción B: Ensalada con pechuga troceada, preparada el día anterior (1/2 plato + 1/4 plato proteína) + tostada integral 1 rebanada", note:"Evitar bacon/hamburguesa/\"americanadas\" como base habitual de la recena — dejarlo como excepción puntual. El wrap de fiambres, ocasional." }
@@ -336,7 +336,7 @@ const days = [
     meals: [
       { type:"D", time:"10:00 (pre-gym)", name:"Desayuno pre-entreno", tags:[], desc:"Opción A: Tostada integral 1-2 rebanadas + aceite de oliva (1 cucharada) + café + fruta abundante — plátano, melón, piña o sandía (ración generosa)\nOpción B: Avena con leche de soja (1 taza) + fruta abundante (ración generosa) + café", note:"Avena con leche de soja (Pearl) como primera opción si está disponible, mejor que leche de vaca con sabor añadido." },
       { type:"C", time:"Al salir del gym", name:"Comida", tags:[], desc:"Opción A: Pechuga de pollo (1/4 plato) + arroz (1/4 plato) + ensalada propia con tomate, feta, nueces, maíz, atún, lechuga, cebolla y pepino (1/2 plato)\nOpción B: Huevo duro 2 uds + batata/patata cocida (1/4 plato) + ensalada (1/2 plato) + fruta abundante (ración generosa)\nOpción C (si hay enchiladas disponibles): Enchiladas de pollo, 2 unidades (1/4-1/2 plato) + fruta abundante (ración generosa)", note:"La ensalada propia es de las mejores opciones disponibles en el buffet. Elige la misma letra (A/B/C) en la comida y en la cena de este turno — están pensadas como combo del día." },
-      { type:"Me", time:"En el turno", name:"Merienda", tags:[], desc:"Opción A: Yogur (1 unidad) + chía (1 cucharadita) + fruta abundante (ración generosa)\nOpción B: Leche con avena (1 vaso) o snack proteico (1 unidad)", note:"El yogur disponible es lácteo (no de soja); válido igualmente como merienda ligera. La chía la añade él habitualmente en el yogur — mantenerla." },
+      { type:"Me", time:"En el turno", name:"Merienda", tags:[], desc:"Opción A: Yogur (1 unidad) + chía (1 cucharadita) + fruta abundante (ración generosa)\nOpción B: Leche con avena (1 vaso) o snack proteico (1 unidad)", note:"El yogur disponible es lácteo (no de soja); válido igualmente como merienda ligera. La chía la añades tú habitualmente en el yogur — mantenerla." },
       { type:"Ce", time:"21:30 (en el turno)", name:"Cena — combo con la comida", tags:[], desc:"Opción A: Wrap de beef o pavo, queso provolone, lechuga, tomate y salsa miel-mostaza (1/2 plato) + fruta abundante (ración generosa)\nOpción B: Doblecheese burger del menú (1/4 plato) + fruta abundante (ración generosa)\nOpción C: Ensalada de lechuga, tomate, pepino, feta y nueces (1/2 plato) + 2 pechugas troceadas (1/4 plato)", note:"Cena vinculada a la comida elegida: comida A → cena A, comida B → cena B, comida C (enchiladas) → cena C. El wrap y la doblecheese pasan a formar parte habitual del ciclo, no son ya una excepción aislada." }
     ],
     batchCooking: null
@@ -352,7 +352,7 @@ const days = [
     meals: [
       { type:"D", time:"10:00 (pre-gym)", name:"Desayuno pre-entreno", tags:[], desc:"Opción A: Avena con leche de soja (1 taza) + fruta abundante (ración generosa) + café\nOpción B: Tostada integral 1-2 rebanadas + philadelphia (1 cucharada) + fruta abundante (ración generosa) + café", note:"Entreno más largo y con cardio — priorizar la opción con más HC de asimilación gradual (avena)." },
       { type:"C", time:"Al salir del gym", name:"Comida", tags:[], desc:"Opción A: Ensalada propia con tomate, feta, nueces, maíz, atún, lechuga, cebolla y pepino (1/2 plato) + pechuga troceada (1/4 plato)\nOpción B: Pechuga de pollo (1/4 plato) + arroz (1/4 plato) + huevo duro 1 ud + fruta abundante (ración generosa)\nOpción C (si hay enchiladas disponibles): Enchiladas de pollo, 2 unidades (1/4-1/2 plato) + fruta abundante (ración generosa)", note:"Las enchiladas, cuando estén disponibles, son una opción válida y de las que más disfruta — no hace falta limitarlas más allá de su disponibilidad real en el menú." },
-      { type:"Me", time:"Antes de dormir (duerme ~3h antes del turno)", name:"Merienda corta", tags:[], desc:"Opción A: Fruta abundante (ración generosa)\nOpción B: Algo ligero tipo desayuno si no hay fruta — ej. tostada pequeña con philadelphia (1 cucharada)", note:"Mantener ligera por digestión, dado que duerme poco tiempo antes de entrar al turno." },
+      { type:"Me", time:"Antes de dormir (duermes ~3h antes del turno)", name:"Merienda corta", tags:[], desc:"Opción A: Fruta abundante (ración generosa)\nOpción B: Algo ligero tipo desayuno si no hay fruta — ej. tostada pequeña con philadelphia (1 cucharada)", note:"Mantener ligera por digestión, dado que duermes poco tiempo antes de entrar al turno." },
       { type:"Ce", time:"00:00 (recena, en el turno)", name:"Cena / recena", tags:[], desc:"Opción A: Revuelto de 3-4 huevos (1/4-1/2 plato) + pavo (un puñado) + queso cottage (2-3 cucharadas) + fruta abundante (ración generosa)\nOpción B: Alternativa disponible más cercana a esta estructura (1/4 plato proteína aprox.), evitando bacon/hamburguesa como base", note:"El yogur adicional a media noche es buena estrategia para mantener energía durante el turno — mantenerlo." }
     ],
     batchCooking: null
@@ -362,11 +362,11 @@ const days = [
     full: "Saliente de turno de noche",
     sport: "😴 Sin entrenamiento",
     sportClass: "rest",
-    sportBanner: "Día de recuperación tras el turno de noche. Duerme hasta ~14:00. Prioridad: descanso.",
+    sportBanner: "Día de recuperación tras el turno de noche. Duermes hasta ~14:00. Prioridad: descanso.",
     suppl: null,
     libre: false,
     meals: [
-      { type:"C", time:"~14:00 (al despertar)", name:"Comida principal única de mañana-mediodía", tags:[], desc:"Opción A: Tortilla de 3-4 huevos con pavo (1/4-1/2 plato) + arroz (1/4 plato) + fruta abundante (ración generosa)\nOpción B: Avena con leche (1 taza) + tostadas de pan integral 1-2 rebanadas + philadelphia (1 cucharada) + fruta abundante (ración generosa)", note:"Único evento de comida principal hasta la cena — que sea completo, con buena densidad de proteína e hidratos. Cambiado el queso cottage por philadelphia en esta opción por petición suya, tras 2 meses de plan ya le cansaba." },
+      { type:"C", time:"~14:00 (al despertar)", name:"Comida principal única de mañana-mediodía", tags:[], desc:"Opción A: Tortilla de 3-4 huevos con pavo (1/4-1/2 plato) + arroz (1/4 plato) + fruta abundante (ración generosa)\nOpción B: Avena con leche (1 taza) + tostadas de pan integral 1-2 rebanadas + philadelphia (1 cucharada) + fruta abundante (ración generosa)", note:"Único evento de comida principal hasta la cena — que sea completo, con buena densidad de proteína e hidratos. Cambiado el queso cottage por philadelphia en esta opción por petición tuya, tras 2 meses de plan ya te cansaba." },
       { type:"Me", time:"Tarde, si hay hambre", name:"Merienda (opcional)", tags:[], desc:"Opción A: Fruta abundante (ración generosa)\nOpción B: Sin merienda si no hay hambre real", note:"" },
       { type:"Ce", time:"19:00 (comedor) o 23:00 (recena) según hora de la comida", name:"Cena", tags:[], desc:"Opción A (cena pronto, comedor): menú del día priorizando pechuga o atún (1/4 plato) + ensalada (1/2 plato)\nOpción B (cena tarde, recena): estructura tipo turno noche — huevos, pavo, queso cottage (2-3 cucharadas) y fruta abundante", note:"Depende de a qué hora haya sido la comida al despertar." }
     ],
@@ -405,7 +405,7 @@ const shopCategories = [
     { name: "Arroz (menú del día)", qty: "Base habitual" },
     { name: "Avena instantánea", qty: "Base habitual" },
     { name: "Tostada integral", qty: "Base habitual" },
-    { name: "Pancake + sirope de arce", qty: "Evitar (no le gustan)" },
+    { name: "Pancake + sirope de arce", qty: "Evitar (no te gustan)" },
     { name: "Cereales azucarados (Froot Loops, Raisin Bran, Corn Pops)", qty: "Excepción muy puntual" }
   ]},
   { label: "🥑 Grasas", cls: "cat-fat", items: [
